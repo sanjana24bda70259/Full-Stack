@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking interface</title>
+   <style> 
+   input{
+    color: white;
+   }
+    input[type="withdraw"] {
+  background-color: red;
+}
+ input[type="deposit"] {
+  background-color: blue;
+}
+
+     h3 {
+            color: red;
+        }
+    
+   form { 
+     background-color:white;
+     text-align: center;
+   }
+
+   </style>
+</head>
+<body>
+     <h1> Balance:$ </h1>
+     <h2><label for="Amount">Amount:</label><br></h2>
+     <input type = "Number" required placeholder="Enter your amount "> <br> <br>
+     <input type = "deposit" Value="Deposit"></form> <input type = "withdraw" Value="Withdraw"></form>
+      <h3> Invalid amount</h3>
+      <script> 
+      let balance = 0;
+
+    function deposit() {
+      let amt = Number(document.getElementById("amount").value);
+      let msg = document.getElementById("message");
+
+      if (amt <= 0) {
+        msg.textContent = "Invalid amount";
+        return;
+      }
+
+      balance += amt;
+      document.getElementById("balance").textContent = balance;
+      msg.textContent = "";
+      document.getElementById("amount").value = "";
+    }
+
+    function withdraw() {
+      let amt = Number(document.getElementById("amount").value);
+      let msg = document.getElementById("message");
+
+      if (amt <= 0 || amt > balance) {
+        msg.textContent = "Invalid amount";
+        return;
+      }
+
+      balance -= amt;
+      document.getElementById("balance").textContent = balance;
+      msg.textContent = "";
+      document.getElementById("amount").value = "";
+    }
+  </script>
+</body>
+</html>
