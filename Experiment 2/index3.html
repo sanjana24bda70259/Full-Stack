@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SVG Drawing Tool</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 10px;
+      background: #f4f6f8;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    svg {
+      border: 2px solid #333;
+      background: #fff;
+      width: 100vw;
+      height: 70vh;
+      cursor: crosshair;
+    }
+
+    button {
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>SVG Drawing Tool</h2>
+
+  <div class="controls">
+    <label>
+      Color:
+      <input type="color" id="colorPicker" value="#000000">
+    </label>
+
+    <button onclick="undo()">Undo</button>
+    <button onclick="clearCanvas()">Clear</button>
+  </div>
+
+  <svg id="canvas"></svg>
+
+  <script>
+    const svg = document.getElementById("canvas");
+    const colorPicker = document.getElementById("colorPicker");
+
+    let drawing = false;
+    let currentLine = null;
+    let elements = [];
+
+    svg.addEventListener("mousedown", (e) => {
+      drawing = true;
+
+      const point = getMousePosition(e);
+
+      currentLine = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+      currentLine.setAttribute("points", `${point.x},${point.y}`);
+      currentLine.setAttribute("fill", "none");
+      currentLine.setAttribute("stroke", colorPicker.value);
+      currentLine.setAttribute("stroke-width", "2");
+
+      svg.appendChild(currentLine);
+      elements.push(currentLine);
+    });
+
+    svg.addEventListener("mousemove", (e) => {
+      if (!drawing) return;
+
+      const point = getMousePosition(e);
+      const points = currentLine.getAttribute("points");
+      currentLine.setAttribute("points", points + ` ${point.x},${point.y}`);
+    });
+
+    svg.addEventListener("mouseup", () => {
+      drawing = false;
+    });
+
+    svg.addEventListener("mouseleave", () => {
+      drawing = false;
+    });
+
+    function getMousePosition(evt) {
+      const rect = svg.getBoundingClientRect();
+      return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+      };
+    }
+
+    function undo() {
+      const last = elements.pop();
+      if (last) {
+        svg.removeChild(last);
+      }
+    }
+
+    function clearCanvas() {
+      elements.forEach(el => svg.removeChild(el));
+      elements = [];
+    }
+  </script>
+
+</body>
+</html>
