@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Character Counter</title>
+
+  <script>
+    function live() {
+      var n = document.getElementById("t").value.length;
+      document.getElementById("c").innerText = n;
+    }
+  </script>
+</head>
+
+<body>
+  <h2>LIVE CHARACTER COUNTER</h2>
+
+  <textarea rows="10" cols="50" id="t" oninput="live()"></textarea>
+
+  <p>Total characters: <span id="c">0</span></p>
+</body>
+</html>
