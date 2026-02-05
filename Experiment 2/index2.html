@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Product Filter</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .filter-box {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 6px 10px;
+            font-size: 16px;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            background: #fff;
+            padding: 15px;
+            margin: 10px;
+            width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .price {
+            color: green;
+            font-weight: bold;
+        }
+
+        .category {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Dynamic Product Filter</h1>
+
+    <div class="filter-box">
+        <strong><label for="categoryFilter">Filter by Category: </label></strong>
+        <select id="categoryFilter">
+            <option value="all">All</option>
+            <option value="clothes">Clothes</option>
+            <option value="electronics">Electronics</option>
+        </select>
+    </div>
+
+    <div class="products">
+        <div class="card" data-category="clothes">
+            <h2>Puma T-Shirt</h2>
+            <p class="price">$50</p>
+            <p class="category">Clothes</p>
+        </div>
+
+        <div class="card" data-category="electronics">
+            <h2>Wireless Keyboard</h2>
+            <p class="price">$20</p>
+            <p class="category">Electronics</p>
+        </div>
+
+        <div class="card" data-category="clothes">
+            <h2>Denim Jacket</h2>
+            <p class="price">$80</p>
+            <p class="category">Clothes</p>
+        </div>
+
+        <div class="card" data-category="electronics">
+            <h2>Bluetooth Headphones</h2>
+            <p class="price">$60</p>
+            <p class="category">Electronics</p>
+        </div>
+    </div>
+
+    <script>
+        const filterDropdown = document.getElementById("categoryFilter");
+        const productCards = document.querySelectorAll(".card");
+
+        filterDropdown.addEventListener("change", function () {
+            const selectedCategory = this.value;
+
+            productCards.forEach(card => {
+                const cardCategory = card.getAttribute("data-category");
+
+                if (selectedCategory === "all" || cardCategory === selectedCategory) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
